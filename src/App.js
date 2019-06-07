@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import './index.css'
-
+import './index.css';
+import TodoList from './TodoList.js';
+import TodoTasks from './TodoTasks.js';
 
 class App extends Component {
   constructor(props) {
@@ -10,9 +11,7 @@ class App extends Component {
       list: [],
       currentTask: { text: '', key: '' }
     }
-    //this.inputElement = React.createRef();
   }
-  // set current task to state
   handleInput = (e) => {
     e.preventDefault();
     const taskText = e.target.value;
@@ -45,56 +44,15 @@ class App extends Component {
           addTask={this.addTask}
           handleInput={this.handleInput}
           currentTask={this.state.currentTask}
-        /> </div>
+        /> 
+      </div>
         <TodoTasks 
         entries={this.state.list}
         removeTask={this.removeTask}
         />
-       
       </div>
     )
   }
 }
 
-class TodoList extends Component {
-  componentDidUpdate() {
-    this.inputElement.focus()
-  }
-  render() {
-    const { addTask, handleInput, currentTask } = this.props;
-    return (
-      <div className="todo-list-main">
-        <div className='header'>
-          <form onSubmit={addTask}>
-            <input
-              placeholder="Enter Task"
-              ref={(el => this.inputElement = el)}
-              value={currentTask.text}
-              onChange={handleInput}
-            />
-            <button type='submit'> Add Task </button>
-          </form>
-        </div>
-      </div>
-    )
-  }
-}
-
-
-class TodoTasks extends Component {
-  createTasks = item => {
-    return (
-      <li className='tasks' key={item.key} onClick={() => this.props.removeTask(item.key)}>
-        {item.text}
-      </li>
-    )
-  }
-  render() {
-    const { entries } = this.props;
-    const showList = entries.map(this.createTasks)
-    return(
-      <ul className="dynamic-list">{showList}</ul>
-    )
-  }
-}
 export default App;
